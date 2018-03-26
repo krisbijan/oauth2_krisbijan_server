@@ -6,20 +6,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
- @Configuration
- @EnableResourceServer
+@Configuration
+@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-	 
 
-		@Override
-		public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-			resources.resourceId(AuthorizationServerConfiguration.RESOURCE_ID);
-		}
-		
-		@Override
-		public void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/**").permitAll();
-		}
+	@Override
+	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+		resources.resourceId(AuthorizationServerConfiguration.RESOURCE_ID);
+	}
 
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/changePWD").hasAnyRole("USER", "ADMIN").antMatchers("/**").permitAll();
+	}
 
 }

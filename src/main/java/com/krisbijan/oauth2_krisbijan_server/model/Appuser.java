@@ -1,45 +1,36 @@
 package com.krisbijan.oauth2_krisbijan_server.model;
 
-import java.util.Date;
-import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Table
 @Entity
+@Table(name = "user_entity")
 public class Appuser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
 	private Integer id;
 
-	@Column(unique = true)
-	@Size(min = 6, message = "Name should have at least 6 characters")
-	private String name;
+	@Size(min = 2, message = "First name should have at least 2 characters")
+	private String first_name;
 
-	@Past
-	@Column
-	private Date DOB;
+	@Size(min = 2, message = "Last name should have at least 2 characters")
+	private String last_name;
+	
+	@Size(min = 2, message = "Email should have at least 2 characters")
+	@Email(message="Email not valid")
+	private String email;
 
-	@Column
+	@Size(min = 2, message = "Password should have at least 2 characters")
 	private String password;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "role_id") })
-	private Set<Role> roles;
 
 	public Integer getId() {
 		return id;
@@ -49,63 +40,36 @@ public class Appuser {
 		this.id = id;
 	}
 
-	public Appuser(Integer id, @Size(min = 6, message = "Name should have at least 6 characters") String name,
-			@Past Date dOB, String password, Set<Role> roles) {
-		super();
-		this.id = id;
-		this.name = name;
-		DOB = dOB;
-		this.password = password;
-		this.roles = roles;
+	public String getFirst_name() {
+		return first_name;
 	}
 
-	public Date getDOB() {
-		return DOB;
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
 	}
 
-	public void setDOB(Date dOB) {
-		DOB = dOB;
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + name + ", DOB=" + DOB + "]";
-	}
-
-	public Appuser() {
-
-	}
-
-	public Appuser(@Size(min = 6, message = "Name should have at least 6 characters") String username, @Past Date dOB,
-			String password) {
-		super();
-		this.name = username;
-		DOB = dOB;
-		this.password = password;
-	}
-
+	
 }
