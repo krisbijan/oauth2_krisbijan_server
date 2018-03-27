@@ -9,6 +9,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "user_entity")
@@ -24,19 +25,22 @@ public class UserEntity {
 
 	@Size(min = 2, message = "Last name should have at least 2 characters")
 	private String last_name;
-	
+
 	@Size(min = 2, message = "Email should have at least 2 characters")
-	@Email(message="Email not valid")
+	@Email(message = "Email not valid")
 	private String email;
 
 	@Size(min = 2, message = "Password should have at least 2 characters")
 	@JsonIgnore
 	private String password;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
+
+	@ManyToMany(fetch=FetchType.EAGER , cascade = { 
+	        CascadeType.PERSIST, 
+	        CascadeType.MERGE
+	    })
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
-	private Set<Role> roles;
+	private Set<Role> roles = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -87,6 +91,6 @@ public class UserEntity {
 	}
 
 	public UserEntity() {
-		
+
 	}
 }

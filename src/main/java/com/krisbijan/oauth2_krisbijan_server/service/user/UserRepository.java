@@ -6,19 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.krisbijan.oauth2_krisbijan_server.model.Appuser;
 import com.krisbijan.oauth2_krisbijan_server.model.UserEntity;
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<Appuser, Integer>{
+public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 	
 
     @Modifying
-    @Query("update Appuser user set user.password = :password where user.email = :email")
-    public Appuser changeUserPassword(@Param("email") String email, @Param("password") String password);
+    @Query("update UserEntity user set user.password = :password where user.email = :email")
+    public Integer changeUserPassword(@Param("email") String email, @Param("password") String password);
 
-	public Appuser findByEmail(String email);
+	public UserEntity findByEmail(String email);
     
 }

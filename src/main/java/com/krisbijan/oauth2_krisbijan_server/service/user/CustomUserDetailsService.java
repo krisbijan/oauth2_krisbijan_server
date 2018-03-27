@@ -12,7 +12,7 @@ import com.krisbijan.oauth2_krisbijan_server.model.UserEntity;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	UserEntityRepository userRepository;
+	UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {

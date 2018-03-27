@@ -1,9 +1,13 @@
 package com.krisbijan.oauth2_krisbijan_server.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -26,7 +30,8 @@ public class Role implements GrantedAuthority{
 	private String name;
 	
 	@ManyToMany(mappedBy = "roles")
-	Set<UserEntity> users;
+	@JsonIgnore
+	private Set<UserEntity> users = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -44,6 +49,16 @@ public class Role implements GrantedAuthority{
 		super();
 		this.id = id;
 		this.name = name;
+	}
+	
+	public void addUser(UserEntity user) {
+		this.users.add(user);
+		user.getRoles().add(this);
+	}
+
+	public void removeUser(UserEntity user) {
+		this.users.remove(user);
+		user.getRoles().remove(this);
 	}
 
 	public void setName(String name) {
