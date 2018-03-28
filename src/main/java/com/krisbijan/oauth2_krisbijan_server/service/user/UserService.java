@@ -47,4 +47,9 @@ public class UserService {
 		return users;
 	}
 
+	public UserEntity getOne(String email) {
+		UserEntity user = repository.findByEmail(email);
+		return user;
+	}
+
 }

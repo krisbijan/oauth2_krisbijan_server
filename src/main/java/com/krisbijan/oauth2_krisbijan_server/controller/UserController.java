@@ -41,5 +41,12 @@ public class UserController {
 		
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/resetPWD")
+	public ResponseEntity<UserEntity> changePWD(@RequestParam String email) {
+		//PLACEHOLDER
+		UserEntity user = userService.getOne(email);
+		return new ResponseEntity<>(user, HttpStatus.CREATED);
+	}
 
 }
