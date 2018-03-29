@@ -33,7 +33,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Qualifier("authenticationManagerBean")
 	AuthenticationManager authenticationManager;
 	
-	TokenStore tokenStore = new InMemoryTokenStore();
+	public static TokenStore tokenStore = new InMemoryTokenStore();
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
