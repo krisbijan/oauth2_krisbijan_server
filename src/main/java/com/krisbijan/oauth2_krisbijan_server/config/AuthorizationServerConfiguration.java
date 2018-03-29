@@ -50,7 +50,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Primary
 	public DefaultTokenServices tokenServices() {
 		DefaultTokenServices tokenServices = new DefaultTokenServices();
-		tokenServices.setTokenStore(this.tokenStore);
+		tokenServices.setTokenStore(tokenStore);
 		return tokenServices;
 		
 	}
